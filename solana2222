@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts – Solana France</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:#f5f7fa;
+      color:#243238;
+      overflow-x:hidden;
+    }
+
+    /* Écran d’animation d’entrée */
+    .intro-screen{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(135deg,#0077b6,#00b4d8);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+      animation:introFadeOut 1s ease 4s forwards;
+    }
+    @keyframes introFadeOut{
+      to{opacity:0;visibility:hidden;}
+    }
+
+    .intro-logo{
+      width:260px;
+      max-width:70%;
+      animation:logoPop 1.2s ease-out forwards;
+    }
+    @keyframes logoPop{
+      0%{transform:scale(.4);opacity:0;}
+      60%{transform:scale(1.05);opacity:1;}
+      100%{transform:scale(1);}
+    }
+
+    .potato-train{
+      margin-top:40px;
+      display:flex;
+      gap:18px;
+      opacity:0;
+      animation:potatoIn 1s ease-out 1s forwards;
+    }
+    @keyframes potatoIn{
+      0%{transform:translateY(60px);opacity:0;}
+      100%{transform:translateY(0);opacity:1;}
+    }
+    .potato{
+      width:70px;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));
+      animation:potatoFollow 3s ease-in-out infinite;
+    }
+    .potato:nth-child(2){animation-delay:.15s;}
+    .potato:nth-child(3){animation-delay:.3s;}
+    @keyframes potatoFollow{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-10px);}
+    }
+
+    .intro-text{
+      margin-top:28px;
+      color:#e0f7ff;
+      font-size:1.1rem;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+
+    .intro-cta{
+      margin-top:32px;
+      padding:12px 26px;
+      border-radius:999px;
+      border:none;
+      background:#ffffff;
+      color:#0077b6;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(0,0,0,.25);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .intro-cta span{font-size:1.3rem;}
+    .intro-cta:hover{transform:translateY(-2px);}
+
+    /* Contenu principal */
+    header{
+      background:#ffffff;
+      border-bottom:4px solid #00b4d8;
+      padding:18px 24px;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .header-inner{
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .brand img{
+      height:42px;
+    }
+    .brand-title{
+      font-size:1.4rem;
+      color:#0077b6;
+      font-weight:700;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .tagline{
+      font-size:.9rem;
+      color:#0277bd;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:28px auto 40px;
+      padding:0 20px;
+    }
+    .intro-block{
+      background:#ffffff;
+      border-radius:12px;
+      padding:22px 26px;
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
+      border-left:5px solid #0077b6;
+      margin-bottom:30px;
+    }
+    .intro-block h2{
+      color:#0077b6;
+      margin-bottom:10px;
+    }
+
+    .quick-contacts,.services-grid{
+      background:#ffffff;
+      border-radius:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,.06);
+      padding:24px 26px;
+      margin-bottom:26px;
+    }
+
+    .quick-contacts h2,.services-grid h2{
+      color:#0077b6;
+      margin-bottom:18px;
+    }
+
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:16px;
+    }
+    .quick-item{
+      background:#f5f7fa;
+      border-radius:10px;
+      padding:14px 16px;
+      border-left:4px solid #00b4d8;
+      transition:transform .2s,box-shadow .2s;
+      cursor:pointer;
+    }
+    .quick-item:hover{
+      transform:translateY(-3px);
+      box-shadow:0 8px 18px rgba(0,0,0,.12);
+    }
+    .quick-item strong{
+      color:#0077b6;
+      display:block;
+      margin-bottom:4px;
+    }
+    .quick-item a{
+      color:#006ba3;
+      text-decoration:none;
+    }
+
+    .services-grid-inner{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+    .service-card{
+      background:#f5f7fa;
+      border-radius:10px;
+      padding:18px 18px 10px;
+      border-top:4px solid #00b4d8;
+    }
+    .service-card h3{
+      color:#0077b6;
+      margin-bottom:10px;
+      font-size:1.1rem;
+    }
+    .contact-info{
+      margin-bottom:12px;
+      border-bottom:1px solid #e0e0e0;
+      padding-bottom:8px;
+      font-size:.95rem;
+    }
+    .contact-info:last-child{
+      border-bottom:none;
+    }
+
+    footer{
+      text-align:center;
+      padding:18px;
+      font-size:.85rem;
+      color:#607d8b;
+    }
+
+    @media (max-width:768px){
+      .header-inner{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Écran d’intro animé -->
+  <div class="intro-screen" id="intro">
+    <img src="logo-solana.png" alt="Solana France" class="intro-logo">
+    <div class="potato-train">
+      <img src="potato.png" alt="" class="potato">
+      <img src="potato.png" alt="" class="potato">
+      <img src="potato.png" alt="" class="potato">
+    </div>
+    <div class="intro-text">Semences de pommes de terre & expertise</div>
+    <button class="intro-cta" id="goContacts">
+      <span>➜</span> Voir les contacts
+    </button>
+  </div>
+
+  <!-- Contenu principal -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <img src="logo-solana.png" alt="Solana France">
+        <div>
+          <div class="brand-title">Solana France</div>
+          <div class="tagline">Contacts équipes & services</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="contacts">
+    <section class="intro-block">
+      <h2>Nous sommes à votre écoute</h2>
+      <p>Retrouvez ci-dessous l’ensemble des contacts Solana France&nbsp;: présidence, services techniques, administratifs, logistiques et commerciaux.</p>
+    </section>
+
+    <section class="quick-contacts">
+      <h2>Contacts directs</h2>
+      <div class="quick-grid">
+        <div class="quick-item">
+          <strong>Président</strong>
+          <p>Yannick Lefèvre</p>
+          <p><a href="tel:+33682363560">+33 6 82 36 35 60</a></p>
+          <p><a href="mailto:yannick.lefevre@solana.de">yannick.lefevre@solana.de</a></p>
+        </div>
+        <div class="quick-item">
+          <strong>Service Production / Technique</strong>
+          <p><a href="tel:+33680258269">+33 6 80 25 82 69</a> – emmie.lopes@solana.de</p>
+        </div>
+        <div class="quick-item">
+          <strong>Logistique</strong>
+          <p><a href="mailto:logistique@solana.de">logistique@solana.de</a></p>
+        </div>
+        <div class="quick-item">
+          <strong>Administratif & Achats</strong>
+          <p><a href="tel:+33675240549">+33 6 75 24 05 49</a></p>
+          <p><a href="mailto:contact.solanafrance@solana.de">contact.solanafrance@solana.de</a></p>
+        </div>
+        <div class="quick-item">
+          <strong>Facturation</strong>
+          <p><a href="mailto:facture.solanafrance@solana.de">facture.solanafrance@solana.de</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-grid">
+      <h2>Détail par service</h2>
+      <div class="services-grid-inner">
+        <div class="service-card">
+          <h3>Service Production / Technique</h3>
+          <div class="contact-info">
+            <div><strong>Emmie Lopes</strong></div>
+            <div><a href="tel:+33680258269">+33 6 80 25 82 69</a> – <a href="mailto:emmie.lopes@solana.de">emmie.lopes@solana.de</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Etienne Rose</strong></div>
+            <div><a href="tel:+33699871200">+33 6 99 87 12 00</a> – <a href="mailto:etienne.rose@solana.de">etienne.rose@solana.de</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Samuel Boiret</strong></div>
+            <div><a href="tel:+33665607122">+33 6 65 60 71 22</a> – <a href="mailto:samuel.boiret@solana.de">samuel.boiret@solana.de</a></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <h3>Service Administratif / Achats</h3>
+          <div class="contact-info">
+            <div><strong>Sandrine Michez</strong></div>
+            <div><a href="tel:+33675240549">+33 6 75 24 05 49</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Justine Appert</strong></div>
+            <div><a href="tel:+33608979140">+33 6 08 97 91 40</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Samya Alaabouche</strong></div>
+            <div><a href="tel:+33667971316">+33 6 67 97 13 16</a></div>
+          </div>
+          <div class="contact-info">
+            <div>Mail général : <a href="mailto:contact.solanafrance@solana.de">contact.solanafrance@solana.de</a></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <h3>Logistique</h3>
+          <div class="contact-info">
+            <div><a href="mailto:logistique@solana.de">logistique@solana.de</a></div>
+            <div>Expéditions, suivi de commandes, coordination transport.</div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <h3>Service Commercial</h3>
+          <div class="contact-info">
+            <div><strong>Zone Nord Seine</strong> – Romain Cardinael</div>
+            <div><a href="tel:+33671023000">+33 6 71 02 30 00</a> – <a href="mailto:romain.cardinael@solana.de">romain.cardinael@solana.de</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Zone Nord Ouest</strong> – Etienne Rose</div>
+            <div><a href="tel:+33699871200">+33 6 99 87 12 00</a> – <a href="mailto:etienne.rose@solana.de">etienne.rose@solana.de</a></div>
+          </div>
+          <div class="contact-info">
+            <div><strong>Zone Sud-Ouest de Paris & Beauce</strong> – Samuel Boiret</div>
+            <div><a href="tel:+33665607122">+33 6 65 60 71 22</a> – <a href="mailto:samuel.boiret@solana.de">samuel.boiret@solana.de</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Solana France – Contacts équipes
+  </footer>
+
+  <script>
+    // Scroll vers les contacts au clic sur le bouton
+    document.getElementById('goContacts').addEventListener('click', function(){
+      document.getElementById('contacts').scrollIntoView({behavior:'smooth'});
+    });
+    // Scroll auto après 4 s même si on ne clique pas
+    setTimeout(function(){
+      document.getElementById('contacts').scrollIntoView({behavior:'smooth'});
+    },4000);
+  </script>
+</body>
+</html>
