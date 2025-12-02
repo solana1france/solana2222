@@ -224,11 +224,11 @@
 <body>
   <!-- Écran d’intro animé -->
   <div class="intro-screen" id="intro">
-    <img src="logo-solana.png" alt="Solana France" class="intro-logo">
+    <img src="Capture d’écran 2025-11-06 154910.png" alt="Solana France" class="intro-logo">
     <div class="potato-train">
-      <img src="potato.png" alt="" class="potato">
-      <img src="potato.png" alt="" class="potato">
-      <img src="potato.png" alt="" class="potato">
+      <img src="trois-pommes-terre-dessin-anime_6317-1435.avif" alt="" class="potato">
+      <img src="trois-pommes-terre-dessin-anime_6317-1435.avif" alt="" class="potato">
+      <img src="trois-pommes-terre-dessin-anime_6317-1435.avif" alt="" class="potato">
     </div>
     <div class="intro-text">Semences de pommes de terre & expertise</div>
     <button class="intro-cta" id="goContacts">
@@ -240,7 +240,7 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <img src="logo-solana.png" alt="Solana France">
+        <img src="Capture d’écran 2025-11-06 154910.png" alt="Solana France">
         <div>
           <div class="brand-title">Solana France</div>
           <div class="tagline">Contacts équipes & services</div>
